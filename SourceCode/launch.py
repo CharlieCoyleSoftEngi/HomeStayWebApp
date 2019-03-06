@@ -38,7 +38,7 @@ def  HomePageSlected(name=None):
          <h1 style ="text-align: center"> Temp HomePage</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-	return page, 404
+	return page
 
 #Profile page
 @app.route('/homestay/profile', methods=["POST","GET"])
@@ -50,10 +50,10 @@ def  HomePageSlected(name=None):
 	except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp Profile</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 #Login page
 @app.route('/homestay/login', methods=["POST","GET"])
@@ -65,10 +65,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp login</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 #create_account page
 @app.route('/homestay/createaccount', methods=["POST","GET"])
@@ -80,10 +80,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp createaccount</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 #create_listing page
 @app.route('/homestay/create_listing', methods=["POST","GET"])
@@ -95,10 +95,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp createlisting</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 
 #listing page
@@ -111,10 +111,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp lisiting</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 
 #users profile page
@@ -129,10 +129,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp user</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 
 #host profile page
@@ -147,10 +147,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp host</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 #admin profile page
 #this will change once sessions are figured out
@@ -164,10 +164,10 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp admin</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
-        return page, 404
+        return page
 
 #apply  page
 @app.route('/homestay/listing/apply', methods=["POST","GET"])
@@ -180,12 +180,20 @@ def  HomePageSlected(name=None):
         except:
                 page ='''
         <html><body>
-         <h1 style ="text-align: center"> Temp HomePage</h1>
+         <h1 style ="text-align: center"> Temp lisitng</h1>
          <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
         </body></html> '''
+        return page
+
+#404 page
+@app.errorhandler(404)
+def  page_not_Found(error):
+	page ='''
+        <html><body>
+         <h1 style ="text-align: center"> 404 You seem to have gotten lost fallen out of the site</h1>
+         <h2 style ="text-align: center">The page you are looking for dosen't exist<h2>
+        </body></html> '''
         return page, 404
-
-
 
 
 if __name__ == "__main":
