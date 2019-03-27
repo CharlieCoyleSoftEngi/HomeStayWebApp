@@ -27,11 +27,12 @@ def init_db():
       db.cursor().executescript(f.read())
       db.commit()
 
+
 #Home page
 @app.route('/homestay', methods=["POST","GET"])
 def  HomePageSlected(name=None):
 	try:
-		return render_template("home.html")
+		return render_template("index.html")
 
 	 #This is a tempory page until template is made.
 	except:
@@ -73,7 +74,7 @@ def  LoginSlected(name=None):
                 return page
 
 #create_account page
-@app.route('/homestay/createaccount', methods=["POST","GET"])
+@app.route('/homestay/create_account', methods=["POST","GET"])
 def  CreateAccountSlected(name=None):
         try:
                  return render_template("create_account.html")
@@ -103,10 +104,10 @@ def  ClistingSlected(name=None):
                 return page
 
 #listing page
-@app.route('/homestay/createaccount', methods=["POST","GET"])
+@app.route('/homestay/listing', methods=["POST","GET"])
 def  CAccountSlected(name=None):
         try:
-                 return render_template("lising.html")
+                 return render_template("listings.html")
 
         #This is a tempory page until template is made.
         except:
@@ -120,11 +121,11 @@ def  CAccountSlected(name=None):
 
 #users profile page
 #this will change once sessions are figured out
-@app.route('/homestay/profle/user', methods=["POST","GET"])
+@app.route('/homestay/profile/user', methods=["POST","GET"])
 def  UserSlected(name=None):
         try:
 		#assuming that profile.html is the same for use host and admin
-                 return render_template("profile.html")
+                 return render_template("student.html")
 
         #This is a tempory page until template is made.
         except:
@@ -137,11 +138,11 @@ def  UserSlected(name=None):
 
 #host profile page
 #this will change once sessions are figured out
-@app.route('/homestay/profle/host', methods=["POST","GET"])
+@app.route('/homestay/profile/host', methods=["POST","GET"])
 def  HostSlected(name=None):
         try:
                 #assuming that profile.html is the same for use host and admin
-                 return render_template("profile.html")
+                 return render_template("host.html")
 
         #This is a tempory page until template is made.
         except:
@@ -154,11 +155,11 @@ def  HostSlected(name=None):
 
 #admin profile page
 #this will change once sessions are figured out
-@app.route('/homestay/profle/admin', methods=["POST","GET"])
+@app.route('/homestay/profile/admin', methods=["POST","GET"])
 def  AdminSlected(name=None):
         try:
                 #assuming that profile.html is the same for use host and admin
-                 return render_template("profile.html")
+                 return render_template("admin.html")
 
         #This is a tempory page until template is made.
         except:
@@ -185,6 +186,23 @@ def  ListingSlected(name=None):
                 </body></html> '''
                 return page
 
+@app.route('/homestay/app', methods=["POST","GET"])
+def  AppSlected(name=None):
+        try:
+                #assuming that profile.html is the same for use host and admin
+                 return render_template("application.html")
+
+        #This is a tempory page until template is made.
+        except:
+                page ='''
+                <html><body>
+                <h1 style ="text-align: center"> Temp lisitng</h1>
+                <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
+                </body></html> '''
+                return page
+
+
+
 #404 page
 @app.errorhandler(404)
 def  page_not_Found(error):
@@ -196,5 +214,5 @@ def  page_not_Found(error):
 	return page, 404
 
 
-if __name__ == "__main":
+if __name__ == "__main__":
   app.run(host="0.0.0.0", debug=True)
