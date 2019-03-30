@@ -54,7 +54,7 @@ def check_auth_A(username, password):
 @app.route('/homestay', methods=["POST","GET"])
 def  HomePageSlected(name=None):
 		db= get_db()
-		data = db.cursoe().execute("SELECT * FROM Vacancies")
+		data = db.cursor().execute("SELECT * FROM Vacancies")
 		data = data.fetchall()
 		return render_template("index.html",data=data)
 
