@@ -57,7 +57,8 @@ def  HomePageSlected(name=None):
 		db= get_db()
 		data = db.cursor().execute("SELECT * FROM Vacancies")
 		data = list(data.fetchall())
-		return render_template("index.html",data=data)
+		urlHelper = "homestay/listing/"
+		return render_template("index.html",data=data,urlHelper=urlHelper)
 
 	 #This is a tempory page until template is made.
 
