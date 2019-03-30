@@ -1,2 +1,2 @@
-from datastore import init_db
+from launch import init_db
 init_db()

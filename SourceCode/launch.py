@@ -7,6 +7,7 @@ from flask import Flask
 app = Flask(__name__)
 db_location = 'var/sqlite3.db'
 app.secret_key = "zxdcfgyhujiolp;'[/.,mnbvcdrtyui"
+
 def get_db():
   db = getattr(g, 'db', None)
   if db is None:
@@ -25,7 +26,7 @@ def init_db():
     db = get_db()
     with app.open_resource('schema.sql', mode='r') as f:
       db.cursor().executescript(f.read())
-      db.commit()
+    db.commit()
 
 def check_auth_H(username, password):
         db = get_db()
@@ -55,7 +56,7 @@ def check_auth_A(username, password):
 def  HomePageSlected(name=None):
 		db= get_db()
 		data = db.cursor().execute("SELECT * FROM Vacancies")
-		data = data.fetchall()
+		data = list(data.fetchall())
 		return render_template("index.html",data=data)
 
 	 #This is a tempory page until template is made.
