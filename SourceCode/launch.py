@@ -53,17 +53,13 @@ def check_auth_A(username, password):
 #Home page
 @app.route('/homestay', methods=["POST","GET"])
 def  HomePageSlected(name=None):
-	try:
-		return render_template("index.html")
+		db= get_db()
+		data = db.cursoe().execute("SELECT * FROM Vacancies")
+		data = data.fetchall()
+		return render_template("index.html",data=data)
 
 	 #This is a tempory page until template is made.
-	except:
-		page ='''
-		<html><body>
-		<h1 style ="text-align: center"> Temp HomePage</h1>
-		<h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-		</body></html> '''
-		return page
+
 
 #Profile page
 @app.route('/homestay/profile', methods=["POST","GET"])
