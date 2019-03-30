@@ -1,12 +1,12 @@
 from flask import Flask, g, render_template, request, session ,url_for, redirect
 import sqlite3
 import os
-
+import bcrypt
 from flask import Flask
 
 app = Flask(__name__)
 db_location = 'var/sqlite3.db'
-
+app.secret_key = "zxdcfgyhujiolp;'[/.,mnbvcdrtyui"
 def get_db():
   db = getattr(g, 'db', None)
   if db is None:
@@ -23,9 +23,31 @@ def  close_db_connection(exception):
 def init_db():
   with app.app_context():
     db = get_db()
-    with app.open_resource('schema.sql', more='r') as f:
+    with app.open_resource('schema.sql', mode='r') as f:
       db.cursor().executescript(f.read())
       db.commit()
+
+def check_auth_H(username, password):
+        db = get_db()
+        data = db.cursor().execute("SELECT email,hPassword FROM Host")
+        data = data.fetchall()
+        password = password.encode('utf-8')
+        for item in (data):
+                        if(username == item[0] and item[1].encode('utf-8') == bcrypt.hashpw(password,item[1].encode('utf-8'))):
+                                print("ITS ALIVE!!! HOST")
+                                return True
+        return False
+
+def check_auth_A(username, password):
+        db = get_db()
+        data = db.cursor().execute("SELECT email,aPassword FROM Applicants")
+        data = data.fetchall()
+        password = password.encode('utf-8')
+        for item in (data):
+                        if(username == item[0] and item[1].encode('utf-8') == bcrypt.hashpw(password,item[1].encode('utf-8'))):
+                                print("ITS ALIVE!!! Applicant")
+                                return True
+        return False
 
 
 #Home page
@@ -61,7 +83,23 @@ def  ProfileSlected(name=None):
 #Login page
 @app.route('/homestay/login', methods=["POST","GET"])
 def  LoginSlected(name=None):
-        try:
+        db = get_db()
+        if request.method == 'POST':
+                  username = request.form['email']
+                  password = request.form['password']
+
+                  if check_auth_H(username,password):
+                         session['Current_User'] =  username
+                         print("Working!")
+                         return redirect(url_for(".Home"))
+
+                  if check_auth_A(username,password):
+                         session['Current_User'] =  username
+                         print("Working!")
+                         return redirect(url_for(".Home"))
+
+	try:
+
                  return render_template("log_in.html")
 
  	#This is a tempory page until template is made.
@@ -76,7 +114,20 @@ def  LoginSlected(name=None):
 #create_account page
 @app.route('/homestay/create_account', methods=["POST","GET"])
 def  CreateAccountSlected(name=None):
-        try:
+        db = get_db()
+        if request.method == 'POST':
+                user = request.form['email']
+                pword = request.form['password']
+                #confirm = request.form['confirmPassword']
+                pword = pword.encode('utf-8')
+                hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
+                if (hashedpw is not None and user is not None):
+                        db.cursor().execute("INSERT INTO Applicants(email,aPassword) VALUES (?,?)",(user,hashedpw))
+                        db.commit()
+                        #return redirect(url_for('.login'))
+
+	try:
+
                  return render_template("create_account.html")
 
         #This is a tempory page until template is made.

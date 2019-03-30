@@ -1,2 +1,2 @@
 from launch import init_db
-init-db()
+init_db()
