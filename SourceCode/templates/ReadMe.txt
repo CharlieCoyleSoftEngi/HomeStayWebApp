@@ -1,1 +1,1 @@
-This is for the html trmplates
+This is for the html templates
