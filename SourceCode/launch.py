@@ -51,6 +51,12 @@ def check_auth_A(username, password):
         return False
 
 
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
+
 #Home page
 @app.route('/homestay', methods=["POST","GET"])
 def  HomePageSlected(name=None):
@@ -164,18 +170,14 @@ def  ClistingSlected(name=None):
 
 #listing page
 @app.route('/homestay/listing', methods=["POST","GET"])
-def  CAccountSlected(name=None):
-        try:
-                 return render_template("listings.html")
+@app.route('/homestay/listing/<id>', methods=["POST","GET"])
+def  CAccountSlected(name=None,id=None):
+	db = get_db()
+	id = int(id)
+	result = query_db('SELECT * FROM Vacancies WHERE vacancyID = ?', [id], one=True)
+	return render_template("listings.html",result=result)
 
         #This is a tempory page until template is made.
-        except:
-               	page ='''
-        	<html><body>
-         	<h1 style ="text-align: center"> Temp lisiting</h1>
-         	<h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
 
 
 #users profile page
