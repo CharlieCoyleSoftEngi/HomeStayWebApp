@@ -90,17 +90,17 @@ def  LoginSlected(name=None):
         db = get_db()
         if request.method == 'POST':
                   username = request.form['email']
-                  password = request.form['password']
+                  password = request.form['address']
 
                   if check_auth_H(username,password):
                          session['Current_User'] =  username
                          print("Working!")
-                         return redirect(url_for(".Home"))
+                         return redirect(url_for(".HomePageSlected"))
 
                   if check_auth_A(username,password):
                          session['Current_User'] =  username
                          print("Working!")
-                         return redirect(url_for(".Home"))
+                         return redirect(url_for(".HomePageSlected"))
 
 	try:
 
@@ -120,10 +120,6 @@ def  LoginSlected(name=None):
 def  CreateAccountSlected(name=None):
         db = get_db()
         if request.method == 'POST':
-		id = db.cursor().execute("SELECT MAX(applicantID) FROM Applicants")
-		id = id.fetchall()
-		aId = int(id[0])
-		aId =  aId + 1
                 user = request.form['email']
                 pword = request.form['password']
 		firstName = request.form['firstname']
@@ -132,13 +128,16 @@ def  CreateAccountSlected(name=None):
 		dob = request.form['date']
 		university = request.form['university']
 		nationality = request.form['nationality']
-                #confirm = request.form['confirmPassword']
-                pword = pword.encode('utf-8')
-                hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
-                if (hashedpw is not None and user is not None):
-                        db.cursor().execute("INSERT INTO Applicants(applicantID,email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?,?)",(aId,user,hashedpw,firstName,lastName,diet,dob,university,nationality))
-                        db.commit()
+		confirm = request.form['confirmpassword']
+		if pword == confirm :
+                	pword = pword.encode('utf-8')
+                	hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
+               		if (hashedpw is not None and user is not None):
+                        		db.cursor().execute("INSERT INTO Applicants(applicantID,email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality))
+                        		db.commit()
                         #return redirect(url_for('.login'))
+		else :
+			return render_template("create_account.html")
 
 	try:
 
@@ -175,7 +174,10 @@ def  CAccountSlected(name=None,id=None):
 	db = get_db()
 	id = int(id)
 	result = query_db('SELECT * FROM Vacancies WHERE vacancyID = ?', [id], one=True)
-	return render_template("listings.html",result=result)
+	result[2]
+	GMLink = "https://www.google.com/maps/search/" + result[2]
+	GMLink = GMLink.replace(" ","+")
+	return render_template("listings.html",result=result,GMLink=GMLink)
 
         #This is a tempory page until template is made.
 
