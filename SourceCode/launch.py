@@ -122,8 +122,8 @@ def  CreateAccountSlected(name=None):
         if request.method == 'POST':
 		id = db.cursor().execute("SELECT MAX(applicantID) FROM Applicants")
 		id = id.fetchall()
-		aId = id[0]
-		aId =  aId + 1
+		id = id[0]
+		aId =  id + 1
                 user = request.form['email']
                 pword = request.form['password']
 		firstName = request.form['firstname']
