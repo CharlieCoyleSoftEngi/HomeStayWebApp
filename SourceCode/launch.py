@@ -95,12 +95,12 @@ def  LoginSlected(name=None):
                   if check_auth_H(username,password):
                          session['Current_User'] =  username
                          print("Working!")
-                         return redirect(url_for(".Home"))
+                         return redirect(url_for(".HomePageSlected"))
 
                   if check_auth_A(username,password):
                          session['Current_User'] =  username
                          print("Working!")
-                         return redirect(url_for(".Home"))
+                         return redirect(url_for(".HomePageSlected"))
 
 	try:
 
