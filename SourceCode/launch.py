@@ -177,7 +177,7 @@ def  CAccountSlected(name=None,id=None):
 	result = query_db('SELECT * FROM Vacancies WHERE vacancyID = ?', [id], one=True)
 	result[2]
 	GMLink = "https://www.google.com/maps/search/" + result[2]
-	GMLink = GMLink.replace(" ","_")
+	GMLink = GMLink.replace(" ","+")
 	return render_template("listings.html",result=result,GMLink=GMLink)
 
         #This is a tempory page until template is made.
