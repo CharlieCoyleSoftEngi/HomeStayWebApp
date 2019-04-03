@@ -90,7 +90,7 @@ def  LoginSlected(name=None):
         db = get_db()
         if request.method == 'POST':
                   username = request.form['email']
-                  password = request.form['password']
+                  password = request.form['address']
 
                   if check_auth_H(username,password):
                          session['Current_User'] =  username
