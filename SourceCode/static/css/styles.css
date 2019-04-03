@@ -66,9 +66,10 @@ nav {
   position: sticky;
   top: 0;
   vertical-align: middle;
-  background-color: rgb(246,246,246,0.5);
+  background-color: rgb(246,246,246,0.9);
   padding: 10px;
   border-bottom: #f3f3f3 solid 2px;
+  z-index: 99;
 }
 
 nav ul {
@@ -88,10 +89,12 @@ nav li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  transition: 1.5s;
 }
 
 nav li a:hover {
   color: rgb(241,154 ,18);
+  text-decoration: none;
 }
 
 
