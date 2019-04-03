@@ -120,11 +120,6 @@ def  LoginSlected(name=None):
 def  CreateAccountSlected(name=None):
         db = get_db()
         if request.method == 'POST':
-		id = db.cursor().execute("SELECT MAX(applicantID) FROM Applicants")
-		id = id.fetchall()
-		id = id[0]
-		id = int(id)
-		aId =  id + 1
                 user = request.form['email']
                 pword = request.form['password']
 		firstName = request.form['firstname']
@@ -138,7 +133,7 @@ def  CreateAccountSlected(name=None):
                 	pword = pword.encode('utf-8')
                 	hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
                		if (hashedpw is not None and user is not None):
-                        		db.cursor().execute("INSERT INTO Applicants(applicantID,email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?,?)",(aId,user,hashedpw,firstName,lastName,diet,dob,university,nationality))
+                        		db.cursor().execute("INSERT INTO Applicants(applicantID,email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality))
                         		db.commit()
                         #return redirect(url_for('.login'))
 		else :
