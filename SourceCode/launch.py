@@ -132,7 +132,7 @@ def  CreateAccountSlected(name=None):
 		dob = request.form['date']
 		university = request.form['university']
 		nationality = request.form['nationality']
-		confirm = request.form['confirmPassword']
+		confirm = request.form['confirmpassword']
 		if pword == confirm :
                 	pword = pword.encode('utf-8')
                 	hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
