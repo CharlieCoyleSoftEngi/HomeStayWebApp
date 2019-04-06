@@ -133,7 +133,7 @@ def  CreateAccountSlected(name=None):
                 	pword = pword.encode('utf-8')
                 	hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
                		if (hashedpw is not None and user is not None):
-                        		db.cursor().execute("INSERT INTO Applicants(applicantID,email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality))
+                        		db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality))
                         		db.commit()
                         #return redirect(url_for('.login'))
 		else :
@@ -155,19 +155,12 @@ def  CreateAccountSlected(name=None):
 #create_listing page
 @app.route('/homestay/create_listing', methods=["POST","GET"])
 def  ClistingSlected(name=None):
-        try:
-                 return render_template("create_listing.html")
+
+                 return render_template("createlistings.html")
 
         #This is a tempory page until template is made.
-        except:
-               	page ='''
-        	<html><body>
-         	<h1 style ="text-align: center"> Temp createlisting</h1>
-         	<h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
+       #listing page
 
-#listing page
 @app.route('/homestay/listing', methods=["POST","GET"])
 @app.route('/homestay/listing/<id>', methods=["POST","GET"])
 def  CAccountSlected(name=None,id=None):
