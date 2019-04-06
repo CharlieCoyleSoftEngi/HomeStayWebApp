@@ -138,7 +138,7 @@ def  CreateAccountSlected(name=None):
                		if (hashedpw is not None and user is not None):
                         		db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality,phoneNumber) VALUES (?,?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality,telNo))
                         		db.commit()
-                        #return redirect(url_for('.login'))
+                        return redirect(url_for('.login'))
 		else :
 			return render_template("create_account.html")
 
@@ -205,7 +205,7 @@ def  ClistingSlected(name=None):
                 db = get_db()
                 print("we got here")
                 hostid = query_db('SELECT hostID FROM Host WHERE email = ?', [Host], one=True)
-                db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo)Values(?,?,?,?,?,?,?,?,?)',(hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extraInfo))
+                db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo)Values(?,?,?,?,?,?,?,?,?)',(hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extra_info))
                 db.commit()
                 print("we also got here")
    try:
