@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS Applications;
 
 
 CREATE TABLE Host (
-  hostID int NOT NULL UNIQUE,
+  hostID integer NOT NULL UNIQUE,
   email varchar(255) NOT NULL,
   lastName varchar(255) NOT NULL,
   firstName varchar(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE Host (
 );
 
 CREATE TABLE Vacancies (
-        vacancyID int NOT NULL UNIQUE,
+        vacancyID integer NOT NULL UNIQUE,
         hostID int NOT NULL UNIQUE,
         location varchar(255) NOT NULL,
         description varchar(255),
@@ -36,7 +36,7 @@ CREATE TABLE Vacancies (
 );
 
 CREATE TABLE Applicants (
-        applicantID int NOT NULL UNIQUE,
+        applicantID integer NOT NULL UNIQUE,
         email varchar(255) NOT NULL,
         lastName varchar(255) NOT NULL,
         firstName varchar(255) NOT NULL,

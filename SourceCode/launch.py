@@ -1,4 +1,4 @@
-from flask import Flask, g, render_template, request, session ,url_for, redirect
+   from flask import Flask, g, render_template, request, session ,url_for, redirect
 import sqlite3
 import os
 import bcrypt
@@ -94,11 +94,13 @@ def  LoginSlected(name=None):
 
                   if check_auth_H(username,password):
                          session['Current_User'] =  username
+			 session['Type'] = 'Host'
                          print("Working!")
                          return redirect(url_for(".HomePageSlected"))
 
                   if check_auth_A(username,password):
                          session['Current_User'] =  username
+			 session['Type'] = 'Applicant'
                          print("Working!")
                          return redirect(url_for(".HomePageSlected"))
 
