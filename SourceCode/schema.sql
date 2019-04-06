@@ -28,7 +28,7 @@ CREATE TABLE Vacancies (
         startDate date NOT NULL,
         endDate date NOT NULL,
         available bit DEFAULT 1,
-        curfew time,
+        curfew varchar(255),
         extraInfo varchar(255),
         images varchar(255),
         PRIMARY KEY (vacancyID),
