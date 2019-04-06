@@ -118,7 +118,7 @@ def  LoginSlected(name=None):
                 return page
 
 #create_account page
-@app.route('/homestay/create_account', methods=["POST","GET"])
+@app.route('/homestay/user_create_account', methods=["POST","GET"])
 def  CreateAccountSlected(name=None):
         db = get_db()
         if request.method == 'POST':
@@ -155,26 +155,62 @@ def  CreateAccountSlected(name=None):
                 </body></html> '''
                 return page
 
+@app.route('/homestay/host_create_account', methods=["POST","GET"])
+def  CreateHostAccountSlected(name=None):
+        db = get_db()
+        if request.method == 'POST':
+                user = request.form['email']
+                pword = request.form['password']
+		confirm = request.form['cPassword']
+                firstName = request.form['firstname']
+                lastName = request.form['lastname']
+                telNo = request.form['telNo']
+                if pword == confirm :
+                        pword = pword.encode('utf-8')
+                        hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
+                        if (hashedpw is not None and user is not None):
+                                        db.cursor().execute("INSERT INTO Host(email,hPassword,firstName,lastName,phoneNumber) VALUES (?,?,?,?,?)",(user,hashedpw,firstName,lastName,telNo))
+                                        db.commit()
+                        #return redirect(url_for('.login'))
+                else :
+                        return render_template("create_host.html")
+
+        try:
+
+                 return render_template("create_host.html")
+
+        #This is a tempory page until template is made.
+        except:
+                page ='''
+                <html><body>
+                <h1 style ="text-align: center"> Temp createaccount</h1>
+                <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
+                </body></html> '''
+                return page
+
+
 #create_listing page
 @app.route('/homestay/create_listing', methods=["POST","GET"])
 def  ClistingSlected(name=None):
+   if request.method == 'POST':
+                location = request.form['location']
+                Description = request.form['description']
+                Rate = request.form['rate']
+                StartDate = request.form['start_date']
+                EndDate = request.form['end_date']
+                curfew = request.form['curfew']
+                extra_info = request.form['extra_info']
+                        #Get the host id for foreigen key
+                Host = session["Current_User"]
+                db = get_db()
+                print("we got here")
+                hostid = query_db('SELECT hostID FROM Host WHERE email = ?', [Host], one=True)
+                db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo)Values(?,?,?,?,?,?,?,?,?)',(hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extraInfo))
+                db.commit()
+                print("we also got here")
    try:
    	if session['Type'] == 'Host':
-		if request.method == 'POST':
-			location = request.form['Location']
-			Description = request.form['Description']
-			Rate = request.form['Rate']
-			StartDate = request.form['start_date']
-			EndDate = request.form['end_date']
-			curfew = request.form['curfew']
-			extra_info = request.form['extra_info']
-			#Get the host id for foreigen key
-			Host = session["Current_User"]
-			db = get_db()
-			hostid = query_db('SELECT hostID FROM Host WHERE email = ?', [Host], one=True)
-			db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo)Values(?,?,?,?,?,?,?,?,?)',(hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extraInfo))
-			db.commit()
-   		return render_template("createlistings.html")
+	   	return render_template("createlistings.html")
    	else:
 		return render_template("listingtemp.html")
    except:
