@@ -1,4 +1,4 @@
-   from flask import Flask, g, render_template, request, session ,url_for, redirect
+from flask import Flask, g, render_template, request, session ,url_for, redirect
 import sqlite3
 import os
 import bcrypt
@@ -157,9 +157,27 @@ def  CreateAccountSlected(name=None):
 #create_listing page
 @app.route('/homestay/create_listing', methods=["POST","GET"])
 def  ClistingSlected(name=None):
-
-                 return render_template("createlistings.html")
-
+   try:
+   	if session['Type'] == 'Host':
+		if request.method == 'POST':
+			location = request.form['Location']
+			Description = request.form['Description']
+			Rate = request.form['Rate']
+			StartDate = request.form['start_date']
+			EndDate = request.form['end_date']
+			curfew = request.form['curfew']
+			extra_info = request.form['extra_info']
+			#Get the host id for foreigen key
+			Host = session["Current_User"]
+			db = get_db()
+			hostid = query_db('SELECT hostID FROM Host WHERE email = ?', [Host], one=True)
+			db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo)Values(?,?,?,?,?,?,?,?,?)',(hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extraInfo))
+			db.commit()
+   		return render_template("createlistings.html")
+   	else:
+		return render_template("listingtemp.html")
+   except:
+	return render_template("listingtemp.html")
         #This is a tempory page until template is made.
        #listing page
 
