@@ -130,12 +130,13 @@ def  CreateAccountSlected(name=None):
 		dob = request.form['date']
 		university = request.form['university']
 		nationality = request.form['nationality']
-		confirm = request.form['confirmpassword']
+		confirm = request.form['cPassword']
+		telNo = request.form['telNo']
 		if pword == confirm :
                 	pword = pword.encode('utf-8')
                 	hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
                		if (hashedpw is not None and user is not None):
-                        		db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality) VALUES (?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality))
+                        		db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality,phoneNumber) VALUES (?,?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality,telNo))
                         		db.commit()
                         #return redirect(url_for('.login'))
 		else :
