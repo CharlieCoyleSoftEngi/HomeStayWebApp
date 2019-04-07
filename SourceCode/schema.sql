@@ -32,7 +32,7 @@ CREATE TABLE Vacancies (
         extraInfo varchar(255),
         images varchar(255),
         PRIMARY KEY (vacancyID),
-        FOREIGN KEY (HostID) REFERENCES Host(HostID)
+        FOREIGN KEY (hostID) REFERENCES Host(hostID)
 );
 
 CREATE TABLE Applicants (

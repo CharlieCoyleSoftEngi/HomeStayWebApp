@@ -223,17 +223,15 @@ def  ClistingSlected(name=None):
 @app.route('/homestay/listing', methods=["POST","GET"])
 @app.route('/homestay/listing/<id>', methods=["POST","GET"])
 def  CAccountSlected(name=None,id=None):
-   try:
 	db = get_db()
 	id = int(id)
 	result = query_db('SELECT * FROM Vacancies WHERE vacancyID = ?', [id], one=True)
 	result[2]
 	GMLink = "https://www.google.com/maps/search/" + result[2]
 	GMLink = GMLink.replace(" ","+")
-	HPLink = "../homestay/profile/host" + result[1]
+	result[1]
+	HPLink = "../homestay/profile/host" + str(result[1])
 	return render_template("listings.html",result=result,GMLink=GMLink,HpLink=HPLink)
-  except:
-	return render_template("listingtemp.html",result=result,GMLink=GMLink,HPLink=HPLink) 
 
         #This is a tempory page until template is made.
 
@@ -258,7 +256,7 @@ def  UserSlected(name=None):
 #host profile page
 #this will change once sessions are figured out
 @app.route('/homestay/profile/<user>', methods=["POST","GET"])
-def  HostSlected(name=None user=None):
+def  HostSlected(name=None, user=None):
         try:
                 #assuming that profile.html is the same for use host and admin
                  return render_template("host.html")
