@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Applications;
 
 CREATE TABLE Host (
   hostID integer NOT NULL UNIQUE,
-  email varchar(255) NOT NULL,
+  email varchar(255) NOT NULL UNIQUE,
   lastName varchar(255) NOT NULL,
   firstName varchar(255) NOT NULL,
   hPassword varchar(255) NOT NULL,
@@ -37,29 +37,29 @@ CREATE TABLE Vacancies (
 
 CREATE TABLE Applicants (
         applicantID integer NOT NULL UNIQUE,
-        email varchar(255) NOT NULL,
+        email varchar(255) NOT NULL UNIQUE,
         lastName varchar(255) NOT NULL,
         firstName varchar(255) NOT NULL,
-phoneNumber int,
-aPassword varchar(255) NOT NULL,
-dietaryRequirements varchar(255),
-rating int DEFAULT 5,
-dob date NOT NULL,
-university NOT NULL,
-nationality NOT NULL,
+	phoneNumber int,
+	aPassword varchar(255) NOT NULL,
+	dietaryRequirements varchar(255),
+	rating int DEFAULT 5,
+	dob date NOT NULL,
+	university NOT NULL,
+	nationality NOT NULL,
         CHECK (
-    rating <= 10
-    AND rating >= 0
+    	rating <= 10
+    		AND rating >= 0
         ),
         PRIMARY KEY (applicantID)
 );
 
 CREATE TABLE Applications (
         vacancyID int UNIQUE NOT NULL,
-        ApplicantID int NOT NULL,
+        applicantID int NOT NULL,
         description varchar(255),
         PRIMARY KEY (applicantID, vacancyID),
 FOREIGN KEY (vacancyID) REFERENCES Vacancies(VacancyID),
-FOREIGN KEY (ApplicantID) REFERENCES Applicants(ApplicantID)
+FOREIGN KEY (applicantID) REFERENCES Applicants(applicantID)
 );
 

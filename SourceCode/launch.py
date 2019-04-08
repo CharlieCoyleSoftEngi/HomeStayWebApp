@@ -66,7 +66,7 @@ def  HomePageSlected(name=None):
 			if session['Type'] == 'Host':
                         	UserType = 'Host'
 			else:
-                        	UserType = 'User'
+                        	UserType = 'Applicant'
 		except:
 			print ("Not A HOST")
 			UserType = "Visitor"
@@ -82,17 +82,31 @@ def  HomePageSlected(name=None):
 #Profile page
 @app.route('/homestay/profile', methods=["POST","GET"])
 def  ProfileSlected(name=None):
-        try:
-                return render_template("profile.html")
 
+                if session['Type'] == 'Host':
+			db = get_db()
+			userContent =  query_db('SELECT * FROM Host WHERE email = ?', [session['Current_User']], one=True)
+			negStar = 10 - int(userContent[6])
+			negStar1 = range(negStar)
+			posStar1 = range(int(userContent[6]))
+			userListings = db.cursor().execute('SELECT * FROM Vacancies WHERE hostID = ?', [userContent[0]])
+			userListings = list(userListings.fetchall())
+			urlHelper = "../homestay/listing/"
+			return render_template("host.html", userContent=userContent, userListings=userListings, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
+		elif session['Type'] == 'Applicant':
+			db = get_db()
+			userContent = query_db('SELECT * FROM Applicants WHERE email = ?', [session['Current_User']], one=True)
+                        negStar = 10 - int(userContent[7])
+                        negStar1 = range(negStar)
+                        posStar1 = range(int(userContent[7]))
+			urlHelper = "../homestay/listing/"
+			userAplications = db.cursor().execute('SELECT * FROM Applications WHERE applicantID = ?', [userContent[0]])
+			userListings = list(userAplications.fetchall())
+			return render_template("student.html", userContent=userContent, userAplications=userAplications, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
+		else:
+			return render_template("listingtemp.html")
          #This is a tempory page until template is made.
-        except:
-                page ='''
-                <html><body>
-                <h1 style ="text-align: center"> Temp HomePage</h1>
-                <h2 style ="text-align: center">The page you are lookin$
-                </body></html> '''
-                return page
+
 
 #Login page
 @app.route('/homestay/login', methods=["POST","GET"])
@@ -148,7 +162,7 @@ def  CreateAccountSlected(name=None):
                		if (hashedpw is not None and user is not None):
                         		db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality,phoneNumber) VALUES (?,?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality,telNo))
                         		db.commit()
-                        return redirect(url_for('.login'))
+                        return redirect(url_for('.LoginSlected'))
 		else :
 			return render_template("create_account.html")
 
@@ -249,47 +263,26 @@ def  CAccountSlected(name=None,id=None):
 	GMLink = "https://www.google.com/maps/search/" + result[2]
 	GMLink = GMLink.replace(" ","+")
 	result[1]
-	HPLink = "../homestay/profile/host/" + str(result[1])
+	HPLink = "../profile/host/" + str(result[1])
 	print(HPLink)
 	return render_template("listings.html",result=result,GMLink=GMLink,HPLink=HPLink)
 
         #This is a tempory page until template is made.
 
 
-#users profile page
-#this will change once sessions are figured out
-@app.route('/homestay/profile', methods=["POST","GET"])
-def  UserSlected(name=None):
-        try:
-		#assuming that profile.html is the same for use host and admin
-                 return render_template("student.html")
-
-        #This is a tempory page until template is made.
-        except:
-               	page ='''
-        	<html><body>
-         	<h1 style ="text-align: center"> Temp user</h1>
-         	<h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
-
 #host profile page
 #this will change once sessions are figured out
-@app.route('/homestay/profile/<user>', methods=["POST","GET"])
-def  HostSlected(name=None, user=None):
-        try:
-                #assuming that profile.html is the same for use host and admin
-                 return render_template("host.html")
-
-        #This is a tempory page until template is made.
-        except:
-                page ='''
-        	<html><body>
-         	<h1 style ="text-align: center"> Temp host</h1>
-         	<h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
-
+@app.route('/homestay/profile/host/<host>', methods=["POST","GET"])
+def  HostSlected(name=None, host=None):
+		db = get_db()
+		Host = query_db('SELECT * FROM Host WHERE hostID = ?', [host], one=True)
+		negStar = 10 - int(Host[6])
+		negStar1 = range(negStar)
+		posStar1 = range(int(Host[6]))
+		userListings = db.cursor().execute('SELECT * FROM Vacancies WHERE hostID = ?', [Host[0]])
+		userListings = list(userListings.fetchall())
+		urlHelper = "../../../homestay/listing/"
+		return render_template("host.html", userContent=Host, userListings=userListings, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
 
 #apply  page
 @app.route('/homestay/listing/apply', methods=["POST","GET"])
