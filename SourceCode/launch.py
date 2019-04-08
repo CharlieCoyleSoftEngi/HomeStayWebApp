@@ -1,6 +1,7 @@
 from flask import Flask, g, render_template, request, session ,url_for, redirect
 import sqlite3
 import os
+import os.path
 import bcrypt
 from flask import Flask
 
@@ -60,11 +61,20 @@ def query_db(query, args=(), one=False):
 #Home page
 @app.route('/homestay', methods=["POST","GET"])
 def  HomePageSlected(name=None):
+		try:
+			print (session['Type'])
+			if session['Type'] == 'Host':
+                        	UserType = 'Host'
+			else:
+                        	UserType = 'User'
+		except:
+			print ("Not A HOST")
+			UserType = "Visitor"
 		db= get_db()
 		data = db.cursor().execute("SELECT * FROM Vacancies")
 		data = list(data.fetchall())
 		urlHelper = "homestay/listing/"
-		return render_template("index.html",data=data,urlHelper=urlHelper)
+		return render_template("index.html",data=data,urlHelper=urlHelper,ut=UserType)
 
 	 #This is a tempory page until template is made.
 
@@ -206,8 +216,17 @@ def  ClistingSlected(name=None):
                 print("we got here")
                 hostid = query_db('SELECT hostID FROM Host WHERE email = ?', [Host], one=True)
 		Hostid = int(hostid[0])
+		f = request.files['property']
+		print (f)
+		imageName = str(Hostid) + location.replace(" ","_") + ".PNG"
+		num = 0
+		while os.path.isfile('static/uploads/' + imageName):
+			imageName = imageName + str(num)
+			num = num + 1
+		imagePath = ('static/uploads/' + imageName)
+		f.save(imagePath)
 		print(hostid)
-                db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo)Values(?,?,?,?,?,?,?,?,?)',(Hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extra_info))
+                db.cursor().execute('INSERT INTO Vacancies(hostID,location,description,rate,startDate,endDate,available,curfew,extraInfo,images)Values(?,?,?,?,?,?,?,?,?,?)',(Hostid,location,Description,Rate,StartDate,EndDate,"1",curfew,extra_info,imageName))
                 db.commit()
                 print("we also got here")
    try:
@@ -230,8 +249,9 @@ def  CAccountSlected(name=None,id=None):
 	GMLink = "https://www.google.com/maps/search/" + result[2]
 	GMLink = GMLink.replace(" ","+")
 	result[1]
-	HPLink = "../homestay/profile/host" + str(result[1])
-	return render_template("listings.html",result=result,GMLink=GMLink,HpLink=HPLink)
+	HPLink = "../homestay/profile/host/" + str(result[1])
+	print(HPLink)
+	return render_template("listings.html",result=result,GMLink=GMLink,HPLink=HPLink)
 
         #This is a tempory page until template is made.
 

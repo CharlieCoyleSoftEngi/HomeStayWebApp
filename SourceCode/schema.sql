@@ -21,7 +21,7 @@ CREATE TABLE Host (
 
 CREATE TABLE Vacancies (
         vacancyID integer NOT NULL UNIQUE,
-        hostID int NOT NULL UNIQUE,
+        hostID int NOT NULL,
         location varchar(255) NOT NULL,
         description varchar(255),
         rate varchar(255) NOT NULL,
