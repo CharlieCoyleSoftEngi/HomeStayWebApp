@@ -2,18 +2,30 @@
   <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-    <link href="../../static/css/styles.css" type="text/css" rel="stylesheet">
+    <link href="../../../static/css/styles.css" type="text/css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="../../static/images/favi.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../../../static/images/favi.ico" type="image/x-icon" />
 
     <title>HomeStay - Listings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
+	<style type="text/css">
+    fieldset {
+      position: relative;
+    }
 
-  <body>
+    input {
+        position: absolute;
+        left: 0;
+        right: 0;
+	width: 98%;
+ 	 padding: 1%;
+    }
+</style>	
+    <body>
     <nav>
         <ul>
-          <a href="../homestay"><img src="../../static/images/logo.jpg" style="height: 50px; padding-left: 10px; padding-right:10px;"/></a>
+          <a href="../homestay"><img src="../../../static/images/logo.jpg" style="height: 50px; padding-left: 10px; padding-right:10px;"/></a>
           <li><a href="../homestay/login">Log In</a></li>
           <li><a href="../homestay/listing">Listings</a></li>
           <li><a href="../homestay">Home</a></li>
@@ -29,15 +41,15 @@
         <h2>Create a Listing</h2><hr>
               <form name"application" action="" method="POST" enctype = "multipart/form-data">
               <h2>Host Email: </h2>
-              <h3></h3></br></br>
+              <h3>{{hostEmail}}</h3>
               <h2>Applicant email: </h2>
-              <h3></h3></br></br>
+              <h3>{{applicantEmail}}</h3></br></br>
               <h3>Please enter your message to the host enter any information not on your profile in 1000 characters </h3>
-              <input type="text" name="body" size="1000"></br></br>
-            <button type="submit" value="CreateApplication" class="btn">
-              Submit
-            </button>
-          </form>
+              <br>
+         	<textarea rows = "10" cols = "200" name = "description"></textarea>
+	      <br>
+              <button type="submit" value="CreateApplication" class="btn">Submit</button>
+              </form>
       </div>
     </main>
     <footer>

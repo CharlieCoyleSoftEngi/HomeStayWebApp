@@ -42,7 +42,11 @@
         <h3>{{result[8]}}</h3>
         <h2>Aditional Information</h2>
         <h3>{{result[9]}}</h3>
-	<a href={{HPLink}}>Host Profile</a>
+	<h3><a href={{HPLink}}>Host Profile</a></h3>
+	{% if buttonLink %}
+	 <button><a href= {{Link}}>Apply</a></button>
+		
+	{% endif %}
 	</table>
 	</section>
       </div>
