@@ -265,7 +265,12 @@ def  CAccountSlected(name=None,id=None):
 	result[1]
 	HPLink = "../profile/host/" + str(result[1])
 	print(HPLink)
-	return render_template("listings.html",result=result,GMLink=GMLink,HPLink=HPLink)
+	if session['Type'] == 'Applicant':
+		strID = str(id)
+		buttonLink = strID + "/apply"
+	else:
+		buttonLink = None
+	return render_template("listings.html",result=result,GMLink=GMLink,HPLink=HPLink,buttonLink=buttonLink)
 
         #This is a tempory page until template is made.
 @app.route('/homestay/listing/<id>/apply', methods=["POST","GET"])
