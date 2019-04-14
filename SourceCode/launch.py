@@ -268,6 +268,26 @@ def  CAccountSlected(name=None,id=None):
 	return render_template("listings.html",result=result,GMLink=GMLink,HPLink=HPLink)
 
         #This is a tempory page until template is made.
+@app.route('/homestay/listing/<id>/apply', methods=["POST","GET"])
+def  Createapplication(name=None, id=None):
+	if request.method == 'POST':
+		description = request.form['description']
+		applicantEmail = session['Current_User']
+        	applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
+		applicantID = int(applicantID[0])
+		db = get_db()
+		db.cursor().execute('INSERT INTO Applications(vacancyID,applicantID,description)VALUES(?,?,?)',(id,applicantID,applicantID))
+	        db.commit()
+		return redirect(url_for(".ProfileSlected"))
+	db = get_db()
+	applicantEmail = session['Current_User']
+	applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
+	applicantID = int(applicantID[0])
+	hostID = query_db('SELECT hostID FROM Vacancies WHERE vacancyID = ?', [id], one=True)
+	hostID = int(hostID[0])
+	hostEmail = query_db('SELECT email FROM Host WHERE hostID = ?', [hostID], one=True)
+	hostEmail = str(hostEmail[0])
+	return render_template("application.html", aEmail = applicantEmail, hEmail = hostEmail)
 
 
 #host profile page
