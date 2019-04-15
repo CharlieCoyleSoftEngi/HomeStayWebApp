@@ -80,18 +80,17 @@
 	<!-- CARDS -->
         <div class="album py-5 bg-light">
            <div class="container">
-              <H2>Aplications</H2>
+              <H2>Listings</H2>
               <div class="row">
                 {% for Vacancies in userListings %}<!-- For each vacancy produce a card -->
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                           <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src={{"../../../../static/uploads/" + Vacancies[10]}} data-holder-rendered="true">
-                           <div class="card-body">.
+                             <div class="card-body">.
                                 <p class="card-text" name="location" value={{Vacancies[2]}} >{{Vacancies[2]}} </p>
                                  <div class="d-flex justify-content-between align-items-center">
                                    <div class="btn-group">
-                                        <form action={{"viewapllications/" + Vacancies[0]|string + "/" + userContent[0]|string}}>
-                                           <input type="Submit" class="btn btn-sm btn-outline-secondary" value="View" />
+                                        <form action={{urlHelper + Vacancies[0]|string}}>
+                                           <input type="submit" class="btn btn-sm btn-outline-secondary" value"View"/>
                                         </form>
                                    </div>
                                    <small class="text-muted">{{Vacancies[4]}}</small>
@@ -102,7 +101,6 @@
                 {% endfor %}
               </div>
            </div>
-
 
 
 

@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-    <link href="../../static/css/styles.css" type="text/css" rel="stylesheet">
+    <link href="../../../static/css/styles.css" type="text/css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../../../../../static/images/favi.ico" type="image/x-icon" />
 
@@ -27,87 +27,30 @@
     </nav>
     <div id= "header">
       <div id="header-text">
-        <h1>Profile</h1>
-        <h3>{{userContent[3] + " " + userContent[2] }}</h3>
+        <h1>Application</h1>
+        <h3>{{Location}}</h3>
     </div>
     <main>
       <!---  MAIN BODY CONTENT --->
       <div id="main-content">
 	<section>
-	<div id="Email">
-	    <h2>Email</h2>
-	    <h4>{{userContent[1]}}</h4>
+	<div id="HostEmail">
+	    <h2>Host Email</h2>
+	    <h4>{{hEmail|string}}</h4>
 	</div>
-	<div id="First_Name">
-            <h2>First Name</h2>
-            <h4>{{userContent[3]}}</h4>
+	<div id="UserEmail">
+            <h2>Student Email </h2>
+            <h4>{{sEmail}}</h4>
         </div>
-        <div id="Last_Name">
-            <h2>Last Name</h2>
-            <h4>{{userContent[2]}}</h4>
+        <div id= "applicationText">
+	<h2>Message</h2>
+	<p>{{Application}}</p>	
         </div>
-	<div id="phoneNumber">
-            <h2>Phone Number</h2>
-            <h4>{{userContent[4]}}</h4>
-        </div>
-	<div id="dietery">
-            <h2>Diet Requirements</h2>
-            <h4>{{userContent[6]}}</h4>
-        </div>
-	<div id="dob">
-            <h2>Date of Birth</h2>
-            <h4>{{userContent[8]}}</h4>
-        </div>
-	<div id="University">
-            <h2>University</h2>
-            <h4>{{userContent[7]}}</h4>
-        </div>
-	<div id="Nationality">
-            <h2>Nationality</h2>
-            <h4>{{userContent[9]}}</h4>
-        </div>
-	<div id="Rating">
-            <h2>Rating</h2>
-            <h4>
-		{% for x in posStar1 %}
-			<span class="fa fa-star checked"></span>
-		{% endfor %}
-		{% for x in negStar1 %}
-                        <span class="fa fa-star"></span>
-                {% endfor %}
-	    </h4>
-        </div>
-	<!-- CARDS -->
-        <div class="album py-5 bg-light">
-           <div class="container">
-              <H2>Aplications</H2>
-              <div class="row">
-                {% for Vacancies in userListings %}<!-- For each vacancy produce a card -->
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                           <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src={{"../../../../static/uploads/" + Vacancies[10]}} data-holder-rendered="true">
-                           <div class="card-body">.
-                                <p class="card-text" name="location" value={{Vacancies[2]}} >{{Vacancies[2]}} </p>
-                                 <div class="d-flex justify-content-between align-items-center">
-                                   <div class="btn-group">
-                                        <form action={{"viewapllications/" + Vacancies[0]|string + "/" + userContent[0]|string}}>
-                                           <input type="Submit" class="btn btn-sm btn-outline-secondary" value="View" />
-                                        </form>
-                                   </div>
-                                   <small class="text-muted">{{Vacancies[4]}}</small>
-                                </div>
-                           </div>
-                        </div>
-                    </div>
-                {% endfor %}
-              </div>
-           </div>
 
 
 
 
-	</section>
-      </div>
+	</div>
     </main>
   <footer>
       <!---  FOOTER CONTENT --->

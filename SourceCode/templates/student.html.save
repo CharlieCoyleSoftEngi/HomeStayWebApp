@@ -91,7 +91,7 @@
                                  <div class="d-flex justify-content-between align-items-center">
                                    <div class="btn-group">
                                         <form action={{"viewapllications/" + Vacancies[0]|string + "/" + userContent[0]|string}}>
-                                           <input type="Submit" class="btn btn-sm btn-outline-secondary" value="View" />
+                                           <input type="Submit" class="btn btn-sm btn-outline-secondary" value="View"/>
                                         </form>
                                    </div>
                                    <small class="text-muted">{{Vacancies[4]}}</small>
