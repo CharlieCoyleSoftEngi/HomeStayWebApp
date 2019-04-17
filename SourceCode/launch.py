@@ -147,25 +147,47 @@ def  CreateAccountSlected(name=None):
         db = get_db()
         if request.method == 'POST':
                 user = request.form['email']
+		if user == "":
+			user = None
                 pword = request.form['password']
+		if pword == "":
+			pword = None
 		firstName = request.form['firstname']
+		if firstName == "":
+			firstName = None
 		lastName = request.form['lastname']
+		if lastName == "":
+			lastName= None
 		diet = request.form['diet']
+		if diet == "":
+			diet = None
 		dob = request.form['date']
+		if dob == "":
+			dob = None
 		university = request.form['university']
+		if university == "":
+			university = None
 		nationality = request.form['nationality']
+		if nationality == "":
+			nationality = None
 		confirm = request.form['cPassword']
+		if confirm == "":
+			confirm = None
 		telNo = request.form['telNo']
-		if pword == confirm :
-                	pword = pword.encode('utf-8')
-                	hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
-               		if (hashedpw is not None and user is not None):
-                        		db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality,phoneNumber) VALUES (?,?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality,telNo))
-                        		db.commit()
-                        return redirect(url_for('.LoginSlected'))
-		else :
+		if telNo == "":
+			telNo = None
+		if (user is not None and pword is not None and firstName is not None and lastName is not None and diet is not None and dob is not None and university is not None and nationality is not None and confirm is not None and telNo is not None):
+			if pword == confirm :
+                		pword = pword.encode('utf-8')
+                		hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())
+               			if (hashedpw is not None and user is not None):
+                        			db.cursor().execute("INSERT INTO Applicants(email,aPassword,firstName,lastName,dietaryRequirements,dob,university,nationality,phoneNumber) VALUES (?,?,?,?,?,?,?,?,?)",(user,hashedpw,firstName,lastName,diet,dob,university,nationality,telNo))
+                        			db.commit()
+                        	return redirect(url_for('.LoginSlected'))
+			else :
+				return render_template("create_account.html")
+		else:
 			return render_template("create_account.html")
-
 	try:
 
                  return render_template("create_account.html")
