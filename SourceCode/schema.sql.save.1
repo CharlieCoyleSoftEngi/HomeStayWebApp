@@ -1,0 +1,72 @@
+DROP TABLE IF EXISTS Host;
+DROP TABLE IF EXISTS Vacancies;
+DROP TABLE IF EXISTS Applicants;
+DROP TABLE IF EXISTS Applications;
+DROP TABLE IF EXISTS Admin;
+
+CREATE TABLE Host (
+  hostID integer NOT NULL UNIQUE,
+  email varchar(255) NOT NULL UNIQUE,
+  lastName varchar(255) NOT NULL,
+  firstName varchar(255) NOT NULL,
+  hPassword varchar(255) NOT NULL,
+  phoneNumber int,
+  rating int DEFAULT 5,
+  CHECK (
+    rating <= 10
+    AND rating >= 0
+        ),
+  PRIMARY KEY (hostID)
+);
+
+CREATE TABLE Vacancies (
+        vacancyID integer NOT NULL UNIQUE,
+        hostID int NOT NULL,
+        location varchar(255) NOT NULL,
+        description varchar(255),
+        rate varchar(255) NOT NULL,
+        startDate date NOT NULL,
+        endDate date NOT NULL,
+        available bit DEFAULT 1,
+        curfew varchar(255),
+        extraInfo varchar(255),
+        images varchar(255),
+        PRIMARY KEY (vacancyID),
+        FOREIGN KEY (hostID) REFERENCES Host(hostID)
+);
+
+CREATE TABLE Applicants (
+        applicantID integer NOT NULL UNIQUE,
+        email varchar(255) NOT NULL UNIQUE,
+        lastName varchar(255) NOT NULL,
+        firstName varchar(255) NOT NULL,
+	phoneNumber int,
+	aPassword varchar(255) NOT NULL,
+	dietaryRequirements varchar(255),
+	rating int DEFAULT 5,
+	dob date NOT NULL,
+	university NOT NULL,
+	nationality NOT NULL,
+        CHECK (
+    	rating <= 10
+    		AND rating >= 0
+        ),
+        PRIMARY KEY (applicantID)
+);
+
+CREATE TABLE Applications (
+        vacancyID int NOT NULL,
+        applicantID int NOT NULL,
+	accepted bit DEFAULT 0,
+        description varchar(255),
+        PRIMARY KEY (applicantID, vacancyID),
+FOREIGN KEY (vacancyID) REFERENCES Vacancies(VacancyID),
+FOREIGN KEY (applicantID) REFERENCES Applicants(applicantID)
+);
+
+CREATE TABLE Admin (
+	admin_id integer NOT NULL UNIQUE,
+	password varchar(255) NOT NULL UNIQUE,
+	username varchar(255) NOT NULL UNIQUE,
+	PRIMARY KEY (admin_id)
+);

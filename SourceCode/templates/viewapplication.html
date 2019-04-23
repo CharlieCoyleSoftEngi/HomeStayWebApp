@@ -46,12 +46,14 @@
 	<h2>Message</h2>
 	<p>{{Application|string}}</p>	
         </div>
-
-
-
-
-	</div>
-    </main>
+	{% if HostCheck == True %}
+		<form name="Accept_appplication" action="" method="POST">
+		  <button type ="submit" value="accept" class="btn">Accept</button>
+		</form>
+	{% endif %}
+	 <a href={{ButtonLink}}  ><button  value="Student Profile" class="btn">Student Profile</button></a>
+</div>    
+</main>
   <footer>
       <!---  FOOTER CONTENT --->
       <div id="footer-content">
