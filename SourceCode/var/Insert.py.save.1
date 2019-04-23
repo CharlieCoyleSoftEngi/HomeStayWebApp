@@ -1,0 +1,8 @@
+import sqlite3
+import bcrypt
+app.secret_key = "zxdcfgyhujiolp;'[/.,mnbvcdrtyui"
+conn = sqlite3.connect('sqlite3.db')
+c = conn.cursor()
+
+c.execute('INSERT INTO Admin VALUES(password,username)(?,?)',( hashedpw = bcrypt.hashpw(pword, bcrypt.gensalt())))
+conn.commit()

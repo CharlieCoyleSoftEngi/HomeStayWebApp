@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS Host;
 DROP TABLE IF EXISTS Vacancies;
 DROP TABLE IF EXISTS Applicants;
 DROP TABLE IF EXISTS Applications;
-DROP TABLE IF EXISTS Admin;
+
 
 CREATE TABLE Host (
   hostID integer NOT NULL UNIQUE,
@@ -55,18 +55,11 @@ CREATE TABLE Applicants (
 );
 
 CREATE TABLE Applications (
-        vacancyID int NOT NULL,
+        vacancyID int UNIQUE NOT NULL,
         applicantID int NOT NULL,
-	accepted bit DEFAULT 0,
         description varchar(255),
         PRIMARY KEY (applicantID, vacancyID),
 FOREIGN KEY (vacancyID) REFERENCES Vacancies(VacancyID),
 FOREIGN KEY (applicantID) REFERENCES Applicants(applicantID)
 );
 
-CREATE TABLE Admin (
-	admin_id integer NOT NULL UNIQUE,
-	password varchar(255) NOT NULL UNIQUE,
-	username varchar(255) NOT NULL UNIQUE,
-	PRIMARY KEY (admin_id)
-);

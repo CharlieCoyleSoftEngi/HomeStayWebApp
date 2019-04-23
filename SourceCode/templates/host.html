@@ -1,4 +1,4 @@
-<html>
+^<html>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -94,16 +94,16 @@
                 {% for Vacancies in userApplications %}<!-- For each vacancy produce a card -->
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                           <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src={{"../../../../static/uploads/" + Vacancies[10]}} data-holder-rendered="true">
+                           <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src={{"../../../../static/uploads/" + Vacancies[0]}} data-holder-rendered="true">
                            <div class="card-body">
-                                <p class="card-text" name="Location" value={{Vacancies[2]}} >{{Vacancies[2]}} </p>
+                                <p class="card-text" name="Location" value={{Vacancies[1]}} >{{Vacancies[1]}} </p>
                                  <div class="d-flex justify-content-between align-items-center">
                                    <div class="btn-group">
-                                        <form action={{"viewapllications/" + Vacancies[0]|string + "/" + userContent[0]|string}}}>
+                                        <form action={{"viewapllications/" + Vacancies[3]|string + "/" + Vacancies[4]|string}}}>
                                            <input type="submit" class="btn btn-sm btn-outline-secondary" value="View"/>
                                         </form>
                                    </div>
-                                   <small class="text-muted">{{Vacancies[11]}}</small>
+                                   <small class="text-muted">{{Vacancies[2]}}</small>
                                 </div>
                            </div>
                         </div>

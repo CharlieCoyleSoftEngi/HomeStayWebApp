@@ -36,7 +36,7 @@ def check_auth_H(username, password):
         password = password.encode('utf-8')
         for item in (data):
                         if(username == item[0] and item[1].encode('utf-8') == bcrypt.hashpw(password,item[1].encode('utf-8'))):
-                                print("ITS ALIVE!!! HOST")
+                                print("Working")
                                 return True
         return False
 
@@ -47,7 +47,18 @@ def check_auth_A(username, password):
         password = password.encode('utf-8')
         for item in (data):
                         if(username == item[0] and item[1].encode('utf-8') == bcrypt.hashpw(password,item[1].encode('utf-8'))):
-                                print("ITS ALIVE!!! Applicant")
+                                print("Working")
+                                return True
+        return False
+
+def check_auth_Admin(username, password):
+        db = get_db()
+        data = db.cursor().execute("SELECT username,password FROM Admin")
+        data = data.fetchall()
+        password = password.encode('utf-8')
+        for item in (data):
+                        if(username == item[0] and item[1].encode('utf-8') == bcrypt.hashpw(password,item[1].encode('utf-8'))):
+                                print("Working")
                                 return True
         return False
 
@@ -91,8 +102,11 @@ def  ProfileSlected(name=None):
 			posStar1 = range(int(userContent[6]))
 			userListings = db.cursor().execute('SELECT * FROM Vacancies WHERE hostID = ?', [userContent[0]])
 			userListings = list(userListings.fetchall())
+			userApplications = db.cursor().execute('SELECT Vacancies.images, Vacancies.location, Applicants.email, Applications.vacancyID, Applications.applicantID  FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID LEFT JOIN Applicants ON Applications.applicantID = Applicants.applicantID WHERE Vacancies.hostID = ?', [userContent[0]])
 			urlHelper = "../homestay/listing/"
-			return render_template("host.html", userContent=userContent, userListings=userListings, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
+			userApplications = list(userApplications.fetchall())
+			print ( userApplications )
+			return render_template("host.html", userContent=userContent, userListings=userListings,  userApplications=userApplications, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
 		elif session['Type'] == 'Applicant':
 			db = get_db()
 			userContent = query_db('SELECT * FROM Applicants WHERE email = ?', [session['Current_User']], one=True)
@@ -100,9 +114,9 @@ def  ProfileSlected(name=None):
                         negStar1 = range(negStar)
                         posStar1 = range(int(userContent[7]))
 			urlHelper = "../homestay/listing/"
-			userAplications = db.cursor().execute('SELECT * FROM Applications WHERE applicantID = ?', [userContent[0]])
+			userAplications = db.cursor().execute('SELECT * FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID WHERE applicantID = ?', [userContent[0]])
 			userListings = list(userAplications.fetchall())
-			return render_template("student.html", userContent=userContent, userAplications=userAplications, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
+			return render_template("student.html", userContent=userContent, userAplications=userListings, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
 		else:
 			return render_template("listingtemp.html")
          #This is a tempory page until template is made.
@@ -128,6 +142,11 @@ def  LoginSlected(name=None):
                          print("Working!")
                          return redirect(url_for(".HomePageSlected"))
 
+                  if check_auth_Admin(username,password):
+                         session['Current_User'] =  username
+                         session['Type'] = 'Admin'
+                         print("Working!")
+                         return redirect(url_for(".HomePageSlected"))
 	try:
 
                  return render_template("log_in.html")
@@ -222,17 +241,13 @@ def  CreateHostAccountSlected(name=None):
                         return render_template("create_host.html")
 
         try:
-
-                 return render_template("create_host.html")
-
+		 if session['Type'] == 'Admin':
+                 	return render_template("create_host.html")
+		 else:
+			return render_template("listingtemp.html", Message="Only for access via admin")
         #This is a tempory page until template is made.
         except:
-                page ='''
-                <html><body>
-                <h1 style ="text-align: center"> Temp createaccount</h1>
-                <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
+                return render_template("listingtemp.html", Message="Only for access via admin")
 
 
 #create_listing page
@@ -303,7 +318,7 @@ def  Createapplication(name=None, id=None):
         	applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
 		applicantID = int(applicantID[0])
 		db = get_db()
-		db.cursor().execute('INSERT INTO Applications(vacancyID,applicantID,description)VALUES(?,?,?)',(id,applicantID,applicantID))
+		db.cursor().execute('INSERT INTO Applications(vacancyID,applicantID,description)VALUES(?,?,?)',(id,applicantID,description))
 	        db.commit()
 		return redirect(url_for(".ProfileSlected"))
 	db = get_db()
@@ -331,38 +346,24 @@ def  HostSlected(name=None, host=None):
 		urlHelper = "../../../homestay/listing/"
 		return render_template("host.html", userContent=Host, userListings=userListings, negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
 
-#apply  page
-@app.route('/homestay/listing/apply', methods=["POST","GET"])
-def  ListingSlected(name=None):
-        try:
-                #assuming that profile.html is the same for use host and admin
-                 return render_template("apply.html")
-
-        #This is a tempory page until template is made.
-        except:
-                page ='''
-        	<html><body>
-         	<h1 style ="text-align: center"> Temp lisitng</h1>
-         	<h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
-
-@app.route('/homestay/app', methods=["POST","GET"])
-def  AppSlected(name=None):
-        try:
-                #assuming that profile.html is the same for use host and admin
-                 return render_template("application.html")
-
-        #This is a tempory page until template is made.
-        except:
-                page ='''
-                <html><body>
-                <h1 style ="text-align: center"> Temp lisitng</h1>
-                <h2 style ="text-align: center">The page you are looking for dosen't exist yet</h2>
-                </body></html> '''
-                return page
-
-
+@app.route('/homestay/viewapllications/<Vid>/<Aid>', methods=["POST","GET"])
+def  viewApllication(name=None, Vid=None, Aid=None):
+	db = get_db()
+	if session['Type']=='Host' or session['Type']=='Applicant':
+		if session['Type']=='Host':
+			Aid= Aid[:-1]
+		aEmail = query_db('SELECT email FROM Applicants WHERE applicantID = ?', [Aid], one=True)
+		application = query_db('SELECT * FROM Applications WHERE applicantID = ? AND vacancyID = ?', [Aid, Vid], one=True)
+		hID = query_db('SELECT hostID FROM Vacancies WHERE vacancyID = ?', [Vid], one=True)
+		hID = int(hID[0])
+		hEmail = query_db('SELECT email FROM Host WHERE hostID = ?', [hID], one=True)
+		aEmail = str(aEmail[0])
+		hEmail = str(hEmail[0])
+		location = query_db('SELECT location FROM Vacancies WHERE vacancyID = ?',[Vid], one=True)
+		location = str(location[0])
+		return render_template("viewapplication.html", Location=location, hEmail=hEmail, aEmail=aEmail, Application=application[3])
+	else:
+		return render_template("listingtemp.html")
 
 #404 page
 @app.errorhandler(404)
