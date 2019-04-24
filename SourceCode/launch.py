@@ -104,7 +104,7 @@ def  ProfileSlected(name=None):
 			posStar1 = range(int(userContent[6]))
 			userListings = db.cursor().execute('SELECT * FROM Vacancies WHERE hostID = ?', [userContent[0]])
 			userListings = list(userListings.fetchall())
-			userApplications = db.cursor().execute('SELECT Vacancies.images, Vacancies.location, Applicants.email, Applications.vacancyID, Applications.applicantID  FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID LEFT JOIN Applicants ON Applications.applicantID = Applicants.applicantID WHERE Vacancies.hostID = ? AND Applications.accepted = 0', [userContent[0]])
+			userApplications = db.cursor().execute('SELECT Vacancies.images, Vacancies.location, Applicants.email, Applications.vacancyID, Applications.applicantID  FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID LEFT JOIN Applicants ON Applications.applicantID = Applicants.applicantID WHERE Vacancies.hostID = ? AND Applications.accepted = 0 AND Vacancies.available = 1', [userContent[0]])
 			urlHelper = "../homestay/listing/"
 			userAcceptedApplications = db.cursor().execute('SELECT Vacancies.images, Vacancies.location, Applicants.email, Applications.vacancyID, Applications.applicantID  FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID LEFT JOIN Applicants ON Applications.applicantID = Applicants.applicantID WHERE Vacancies.hostID = ? AND Applications.accepted = 1', [userContent[0]])
 			userApplications = list(userApplications.fetchall())
@@ -117,9 +117,9 @@ def  ProfileSlected(name=None):
                         negStar1 = range(negStar)
                         posStar1 = range(int(userContent[7]))
 			urlHelper = "../homestay/listing/"
-			userAplications = db.cursor().execute('SELECT * FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID WHERE applicantID = ? AND available = 1 ', [userContent[0]])
+			userAplications = db.cursor().execute('SELECT * FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID WHERE Applications.applicantID = ? AND Vacancies.available = 1 ', [userContent[0]])
 			userListings = list(userAplications.fetchall())
-			userAAplications = db.cursor().execute('SELECT * FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID WHERE applicantID = ?  AND available = 0', [userContent[0]])
+			userAAplications = db.cursor().execute('SELECT * FROM Applications LEFT JOIN Vacancies ON Applications.vacancyID = Vacancies.vacancyID WHERE Applications.applicantID = ?  AND Applications.accepted = 1', [userContent[0]])
                         userAListings = list(userAAplications.fetchall())
 			return render_template("student.html", userContent=userContent, userAplications=userListings,userAcceptedAplications=userAListings ,negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
 		else:
