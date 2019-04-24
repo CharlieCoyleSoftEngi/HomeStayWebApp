@@ -131,7 +131,18 @@ footer {
   color: #cfcfcf;
 }
 
+#footer-content h5 {
+  font-family: 'Josefin Sans', sans-serif;
+  float:right;
+  color: #f19a12;
+}
+
+#footer-content h6 {
+  font-family: 'Josefin Sans', sans-serif;
+  float:right;
+  color: #ebebeb;
+}
+
 
 
 /*  FORM ELEMENTS  */
-
