@@ -33,21 +33,19 @@
     </nav>
     <div id= "header">
       <div id="header-text">
-        <h1>Create Listing</h1>
-        <h3>Tag line here</h3>
+        <h1>Create Aplication</h1>
+        <h3>{{location}}</h3>
     </div>
-    <main style=" width:900px; margin-left: 300px; margin-top:400px; margin-right: 300px; ">
+    <main style=" width:900px; margin-left: 30px; margin-top:400px; margin-right: 300px; ">
       <div id="main-content" style="padding: 50px;">
         <h2>Create a Listing</h2><hr>
               <form name"application" action="" method="POST" enctype = "multipart/form-data">
               <h2>Host Email: </h2>
-              <h3>{{hEmail}}</h3>
+              <h3>{{hEmail}}</h3><hr>
               <h2>Applicant email: </h2>
-              <h3>{{aEmail}}</h3></br></br>
-              <h3>Please enter your message to the host enter any information not on your profile in 1000 characters </h3>
-              <br>
-         	<textarea rows = "10" cols = "200" name = "description"></textarea>
-	      <br>
+              <h3>{{aEmail}}</h3><hr>
+              <h4>Please enter your message to the host enter any information not on your profile in 1000 characters </h4>
+         	<textarea rows = "15" cols = "100" name = "description"></textarea>
               <button type="submit" value="CreateApplication" class="btn">Submit</button>
               </form>
       </div>

@@ -95,7 +95,7 @@ def  HomePageSlected(name=None):
 #Profile page
 @app.route('/homestay/profile', methods=["POST","GET"])
 def  ProfileSlected(name=None):
-	#try:
+	try:
                 if session['Type'] == 'Host':
 			db = get_db()
 			userContent =  query_db('SELECT * FROM Host WHERE email = ?', [session['Current_User']], one=True)
@@ -124,9 +124,9 @@ def  ProfileSlected(name=None):
 			return render_template("student.html", userContent=userContent, userAplications=userListings,userAcceptedAplications=userAListings ,negStar1=negStar1, posStar1=posStar1, urlHelper=urlHelper )
 		else:
 			return render_template("listingtemp.html", Message="Please Login as Host or Student Admin do not have profiles")
-	#except:
-		#return render_template("listingtemp.html", Message="Please Log in to view Profile ")
-         #This is a tempory page until template is made.
+	except:
+		return render_template("listingtemp.html", Message="Please Log in to view Profile ")
+        #This is a tempory page until template is made.
 
 
 #Login page
@@ -293,7 +293,7 @@ def  ClistingSlected(name=None):
    	else:
 		return render_template("listingtemp.html")
    except:
-	return render_template("listingtemp.html")
+	return render_template("listingtemp.html", Message="You Must be a host to create a listing")
         #This is a tempory page until template is made.
        #listing page
 
@@ -316,31 +316,35 @@ def  CAccountSlected(name=None,id=None):
 		else:
 			buttonLink = None
 	except:
-		buttonLink = None 
+		buttonLink = None
 	return render_template("listings.html",result=result,GMLink=GMLink,HPLink=HPLink,buttonLink=buttonLink)
 
         #This is a tempory page until template is made.
 @app.route('/homestay/listing/<id>/apply', methods=["POST","GET"])
 def  Createapplication(name=None, id=None):
-	if request.method == 'POST':
-		description = request.form['description']
-		applicantEmail = session['Current_User']
-        	applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
-		applicantID = int(applicantID[0])
+	try:
+		if request.method == 'POST':
+			description = request.form['description']
+			applicantEmail = session['Current_User']
+	        	applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
+			applicantID = int(applicantID[0])
+			db = get_db()
+			db.cursor().execute('INSERT INTO Applications(vacancyID,applicantID,description)VALUES(?,?,?)',(id,applicantID,description))
+		        db.commit()
+			return redirect(url_for(".ProfileSlected"))
 		db = get_db()
-		db.cursor().execute('INSERT INTO Applications(vacancyID,applicantID,description)VALUES(?,?,?)',(id,applicantID,description))
-	        db.commit()
-		return redirect(url_for(".ProfileSlected"))
-	db = get_db()
-	applicantEmail = session['Current_User']
-	applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
-	applicantID = int(applicantID[0])
-	hostID = query_db('SELECT hostID FROM Vacancies WHERE vacancyID = ?', [id], one=True)
-	hostID = int(hostID[0])
-	hostEmail = query_db('SELECT email FROM Host WHERE hostID = ?', [hostID], one=True)
-	hostEmail = str(hostEmail[0])
-	return render_template("application.html", aEmail = applicantEmail, hEmail = hostEmail)
-
+		applicantEmail = session['Current_User']
+		applicantID = query_db('SELECT applicantID FROM Applicants WHERE email = ?', [applicantEmail],one=True)
+		applicantID = int(applicantID[0])
+		hostID = query_db('SELECT hostID FROM Vacancies WHERE vacancyID = ?', [id], one=True)
+		hostID = int(hostID[0])
+		hostEmail = query_db('SELECT email FROM Host WHERE hostID = ?', [hostID], one=True)
+		hostEmail = str(hostEmail[0])
+		location = query_db('SELECT location FROM Vacancies WHERE vacancyID = ?', [id], one=True)
+		location = str(location[0])
+		return render_template("application.html", aEmail = applicantEmail, hEmail = hostEmail, location=location)
+	except:
+		 return render_template("listingtemp.html", Message="You Have already apllied to this or are not loged in")
 
 #host profile page
 #this will change once sessions are figured out
