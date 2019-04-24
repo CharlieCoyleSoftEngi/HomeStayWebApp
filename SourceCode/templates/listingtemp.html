@@ -1,43 +1,41 @@
+
 <html>
   <head>
-    <title>HomeStay</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="../../static/css/styles.css" type="text/css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../../static/images/favi.ico" type="image/x-icon" />
+
+    <title>HomeStay</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../static/css/styles.css" type="text/css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../../static/images/favi.ico" type="image/x-icon" />
     <style>
-      body { margin: 0px; overflow-y: scroll;}
-      nav { vertical-align: middle; background-color: rgb(246,246,246,0.5); padding: 10px; border-bottom: #f3f3f3 solid 1px; }
-      main { padding-left: : 50px; padding-right: 50px; padding-bottom: 200px; position: inherit;}
-      aside { padding: 50px; margin-top: 20px; margin-bottom: 20px; width: 20%; background-color: rgb(54,54,54);}
-      footer { position:relative; bottom: 0px; width: 100%; background-color: rgb(54,54,54);}
-      h1 { margin: auto; position: relative;text-align: center; vertical-align: middle;}
-      ul { list-style-type: none; margin: 0; padding: 0; overflow: hidden;}
-      li { float:right; }
-      li a { display: block; color: rgb(54,54,54); text-align: center; padding: 14px 16px; text-decoration: none; }
-      table { color: #cfcfcf; }
-      #header { width:100%; height: 500px; background-image: url("https://via.placeholder.com/468x500?text=HEADER+IMAGE");}
-      #footer-content { padding-left: 200px; padding-right: 200px; padding-top: 50px; padding-bottom: 50px; }
     </style>
-  </head>
+ </head>
   <body>
     <nav>
         <ul>
-          <a href="index.html"><img src="https://via.placeholder.com/250x75?text=LOGO" style="height: 50px; padding-left: 10px; padding-right:10px;"/></a>
-          <li><a href="log_in.html">Log In</a></li>
-          <li><a href="listings.html">Listings</a></li>
-          <li><a href="index.html">Home</a></li>
+          <a href="../../../../../homestay"><img src="../static/images/logo.jpg" style="height: 50px; padding-left: 10px; padding-right:10px;"/></a>
+          <li><a href="../../../../../homestay/login">Log In</a></li>
+          <li><a href="../../../../../homestay/profile">Profile</a></li>
+          <li><a href="../../../../../homestay">Home</a></li>
         </ul>
     </nav>
     <div id= "header">
-      <h1>Lorem Ipsum</h1>
+      <div id="header-text">
+      <h1>HomeStay</h1>
+      <h3>You lost?</h3>
+      </div>
     </div>
     <main>
       <!---  MAIN BODY CONTENT --->
       <div id="main-content">
-        <aside>
-          
-        </aside>
         <section>
-  	<h2>{{Message}}</h2>
-	</section>
+        <h1>{{Message}}</h1>
+        </section>
       </div>
     </main>
   <footer>
@@ -58,3 +56,5 @@
     </footer>
   </body>
 </html>
+
+

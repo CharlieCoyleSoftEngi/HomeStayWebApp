@@ -76,7 +76,7 @@ def  HomePageSlected(name=None):
 			print (session['Type'])
 			if session['Type'] == 'Host':
                         	UserType = 'Host'
-			elif session['Type'] =='Applicant':
+			elif session['Type'] == 'Host':
                         	UserType = 'Applicant'
 			else:
 				UserType = 'Admin'
