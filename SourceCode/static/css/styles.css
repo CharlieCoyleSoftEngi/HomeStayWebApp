@@ -37,8 +37,7 @@ section {
   height: 500px;
   background-image: url("../images/bedroom_banner.jpg");
   background-size: cover;
-  background-position: center;
-  top: 0px;
+  background-position: bottom;
 }
 
 #header-text {
@@ -48,8 +47,8 @@ section {
   vertical-align: middle;
   font-family: 'Josefin Sans', sans-serif;
   padding-left:5%;
-  padding-right: 5%;
-  padding-top: 2%;
+  padding-right:5%;
+  padding-top:2%;
   padding-bottom: 2%;
   top:175px;
   background-color: rgb(0,0,0);
